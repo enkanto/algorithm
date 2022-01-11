@@ -18,7 +18,6 @@ linter:
     - directives_ordering
     - lines_longer_than_80_chars # avoid
     - curly_braces_in_flow_control_structures
-    - prefer_single_quotes
 
     # DOCUMENTATION
     - slash_for_doc_comments

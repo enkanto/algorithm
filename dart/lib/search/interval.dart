@@ -24,6 +24,7 @@ int binarySearch<T extends Comparable>(List<T> hayStack, T target) {
   return -1;
 }
 
+/// practice reference
 int binarySearchPractice(List<int> list, int target) {
   var left = 0;
   var right = list.length - 1;

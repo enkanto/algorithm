@@ -3,6 +3,8 @@ if [[ `git status --porcelain` ]]; then
   exit 1
 fi
 printf "\e[33;1m%s\e[0m\n" 'Running the Flutter analyzer'
+# TODO: 추후 제거
+cd dart
 dart analyze
 if [ $? -ne 0 ]; then
   printf "\e[31;1m%s\e[0m\n" 'Flutter analyzer error'

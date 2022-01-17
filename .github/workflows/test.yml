@@ -1,0 +1,83 @@
+# Repository의 Actions 탭에 나타날 Workflow 이름으로 필수 옵션은 아닙니다.
+name: Tests
+
+# Workflow를 실행시키기 위한 Event 목록입니다.
+on:
+  # 하단 코드에 따라 main 브랜치에 Push 이벤트가 발생한 경우에 Workflow가 실행됩니다.
+  # 만약 브랜치 구분 없이 이벤트를 지정하고 싶을 경우에는 단순히 아래와 같이 작성도 가능합니다.
+  # on: [push, pull_request]
+  push:
+    branches:
+      - main
+  pull_request:
+
+  # 해당 옵션을 통해 사용자가 직접 Actions 탭에서 Workflow를 실행시킬 수 있습니다.
+  # 여기에서는 추가적으로 더 설명하지는 않겠습니다.
+  # workflow_dispatch:
+
+# 해당 Workflow의 하나 이상의 Job 목록입니다.
+jobs:
+  # Job 이름으로, test라는 이름으로 Job이 표시됩니다.
+  test:
+    name: Unit tests on ${{ matrix.os }}
+    # Runner가 실행되는 환경을 정의하는 부분입니다.
+    runs-on: ${{ matrix.os }}
+    env:
+      working-directory: ./dart
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        sdk: [stable, beta, dev]
+    # test Job 내의 step 목록입니다.
+    steps:
+      # Set up dart
+      - name: Setup Dart SDK
+        uses: dart-lang/setup-dart@v1.3
+        with:
+          sdk: ${{ matrix.sdk }}
+
+      - name: Install dependencies
+        run: dart pub get
+        working-directory: ${{ env.working-directory }}
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+        working-directory: ${{ env.working-directory }}
+      
+      - name: Analyze project source
+        run: dart analyze
+        working-directory: ${{ env.working-directory }}
+
+      - name: Run tests
+        run: dart test
+        working-directory: ${{ env.working-directory }}
+
+  test_old_sdks:
+    runs-on: ${{ matrix.os }}
+    env:
+      working-directory: ./dart
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        sdk: [2.9.0, 2.8.1]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ matrix.sdk }}
+          
+      - name: Install dependencies
+        run: pub get
+        working-directory: ${{ env.working-directory }}
+
+      - name: Check formatting
+        run: dartfmt --dry-run --set-exit-if-changed .
+        working-directory: ${{ env.working-directory }}
+
+      - name: Analyze code
+        run: dartanalyzer --fatal-warnings .
+        working-directory: ${{ env.working-directory }}
+
+      - name: Run tests
+        run: pub run test
+        working-directory: ${{ env.working-directory }}

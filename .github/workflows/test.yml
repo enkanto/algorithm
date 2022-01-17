@@ -32,6 +32,7 @@ jobs:
     steps:
       # Set up dart
       - name: Setup Dart SDK
+        uses: actions/checkout@v2
         uses: dart-lang/setup-dart@v1.3
         with:
           sdk: ${{ matrix.sdk }}

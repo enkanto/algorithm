@@ -1,4 +1,4 @@
-import 'package:algorithms/heaps/base.dart';
+import '../heaps/base.dart';
 
 /// The DoublyLinkedList Node.
 ///

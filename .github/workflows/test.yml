@@ -52,32 +52,32 @@ jobs:
         run: dart test
         working-directory: ${{ env.working-directory }}
 
-  test_old_sdks:
-    runs-on: ${{ matrix.os }}
-    env:
-      working-directory: ./dart
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        sdk: [2.9.0, 2.8.1]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: dart-lang/setup-dart@v1
-        with:
-          sdk: ${{ matrix.sdk }}
+  # test_old_sdks:
+  #   runs-on: ${{ matrix.os }}
+  #   env:
+  #     working-directory: ./dart
+  #   strategy:
+  #     matrix:
+  #       os: [ubuntu-latest, macos-latest, windows-latest]
+  #       sdk: [2.9.0, 2.8.1]
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: dart-lang/setup-dart@v1
+  #       with:
+  #         sdk: ${{ matrix.sdk }}
           
-      - name: Install dependencies
-        run: pub get
-        working-directory: ${{ env.working-directory }}
+  #     - name: Install dependencies
+  #       run: pub get
+  #       working-directory: ${{ env.working-directory }}
 
-      - name: Check formatting
-        run: dartfmt --dry-run --set-exit-if-changed .
-        working-directory: ${{ env.working-directory }}
+  #     - name: Check formatting
+  #       run: dartfmt --dry-run --set-exit-if-changed .
+  #       working-directory: ${{ env.working-directory }}
 
-      - name: Analyze code
-        run: dartanalyzer --fatal-warnings .
-        working-directory: ${{ env.working-directory }}
+  #     - name: Analyze code
+  #       run: dartanalyzer --fatal-warnings .
+  #       working-directory: ${{ env.working-directory }}
 
-      - name: Run tests
-        run: pub run test
-        working-directory: ${{ env.working-directory }}
+  #     - name: Run tests
+  #       run: pub run test
+  #       working-directory: ${{ env.working-directory }}

@@ -40,5 +40,21 @@ void calculateTill1() {
     // 마지막으로 남은 수에 대해서 1씩 빼기
     result += (n-1);
     cout << result << "\n";
+}
 
+void maximizeNumString(){
+    string str;
+    
+    cin >> str;
+
+    // 첫 번째 문자를 숫자로 변경한 값을 대입
+    long long result = str[0] - '0';
+
+    for (int i=1;i<str.size(); i++) {
+        int num = str[i] - '0';
+        if (num <= 1 || result <= 1) result += num;
+        else result *= num;
+    }
+
+    cout << result << "\n";
 }

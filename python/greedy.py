@@ -1,5 +1,22 @@
 import time
 
+def maximize_num_string():
+    start = time.time()
+    
+    numbers = input()
+
+    result = int(numbers[0])
+    for i in range(1,len(numbers)):
+        num = int(numbers[i])
+        if i <= 1:
+            result += num
+        else:
+            result *= num
+    print(result)
+
+    end = time.time()
+    print(f"{end-start:.4f} sec")
+
 def till1_technique():
     start = time.time()
     print("n과 k를 입력하시오")

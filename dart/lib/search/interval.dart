@@ -23,23 +23,3 @@ int binarySearch<T extends Comparable>(List<T> hayStack, T target) {
 
   return -1;
 }
-
-/// practice reference
-int binarySearchPractice(List<int> list, int target) {
-  var left = 0;
-  var right = list.length - 1;
-
-  while (left <= right) {
-    var pivot = (left + right) >> 1;
-
-    if (list[pivot] == target) {
-      return pivot;
-    } else if (list[pivot] < target) {
-      left = pivot + 1;
-    } else {
-      right = pivot - 1;
-    }
-  }
-
-  return -1;
-}
